@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+         <link href="index.css" rel="stylesheet">
+    </head>
+    <body>
+        <h1>BANDUNG BRANKAS</h1>
+        <p>Selamat datang di toko brankas kami, silahkan pilih produk yang ingin anda beli</p>
+        <div class="container">
+            <div id="card-list"></div>
+            <div class="saldo" id="saldo"></div> 
+        </div>
+    <script>
+        const produk = [
+            {
+                nama: "black",
+                harga: 20000,
+                gambar: "black.jpg"
+            },
+            {
+                nama: "ichiban",
+                harga: 20000,
+                gambar: "ichiban.jpg"
+            },
+            {
+                nama: "minisafe",
+                harga: 20000,
+                gambar: "Mini Safe.jpg"
+            },
+            {
+                nama: "taffguard",
+                harga: 20000,
+                gambar: "taff guard.jpg"
+            },
+            {
+                nama: "pressafe",
+                harga: 20000,
+                gambar: "press safe.jpg"
+            },
+            {
+                nama: "taffguard edition",
+                harga: 25000,
+                gambar: "TAFFGUARD.jpg"
+            },
+            {
+                nama: "guardian",
+                harga: 30000,
+                gambar: "guardian.jpg"
+            },
+            {
+                nama: "krisbow",
+                harga: 30000,
+                gambar: "krisbow.jpg"
+            },
+            {
+                nama: "krisbow",
+                harga: 30000,
+                gambar: "krisbow.jpg"
+            },
+            {
+                nama: "krisbow",
+                harga: 30000,
+                gambar: "krisbow.jpg"
+            },
+            
+        ];
+
+        let saldo = 100000;
+        
+        function formatRupiah(amount) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(amount);
+        }
+
+        document.getElementById("card-list").innerHTML = produk.map((item, index) => {
+            return `
+            <div class="card">
+                <img src="${item.gambar}"/>
+                <div class="card-body">
+                    <h2>${item.nama}</h2>
+                    <h3 style="color: red">${formatRupiah(item.harga)}</h3>
+                    <button class="btn btn-primary" data-index="${index}" data-harga="${item.harga}">Beli</button>
+                    </div>
+                </div>
+                    `;
+        }).join("");
+        
+        const beli = document.querySelectorAll(".btn-primary");
+        beli.forEach((button) => {
+            button.addEventListener("click", () => {
+                const index = button.getAttribute("data-index");
+                const harga = produk[index].harga;
+                if (saldo >= harga) {
+                    saldo -= harga;
+                    document.getElementById("saldo").textContent = `Saldo: ${formatRupiah(saldo)}`;
+                    alert(`Anda membeli ${produk[index].nama} seharga ${formatRupiah(harga)}. Sisa saldo: ${formatRupiah(saldo)}`);
+                } else {
+                    alert("Saldo tidak cukup untuk membeli produk ini.");
+                }
+            });
+        });
+                    
+    </script>
+    </body> 
+</html>
